@@ -73,7 +73,6 @@ export class MagicListComponent {
       this.erroNulo = false;
       this.resultado();
     } else {
-      this.limpar();
       this.erroNulo = true;
       this.dadosBusca = false;
     }
