@@ -1,0 +1,115 @@
+<div *ngIf="isLoading" class="fundo-cardsBooster">
+    <div class="loading">
+        <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+        <label style="font-weight: bold; color: white;">Carregando...</label>
+    </div>
+</div>
+<div class="page-list">
+    <div [formGroup]="formPesquisar" class="form-pesquisa">
+        <div class="nome">
+            <input type="text" [(ngModel)]="filter" class="input-nome" placeholder="---- Nome Coleção ----" formControlName="nome">
+        </div>
+
+        <div class="bloco">
+            <select name="bloco" id="bloco" class="select-bloco" formControlName="bloco">
+                <option value="" selected disabled>---- Bloco ----</option>
+                <option *ngFor="let sel of listaBlocos">
+                    <label>
+                        {{sel.bloco}}
+                    </label>
+                </option>
+            </select>
+            <div *ngIf="erroNulo">
+                <small class="msg-erro">
+                    Seleção obrigatória.
+                </small>
+            </div>
+        </div>
+        
+        <div>
+            <button [disabled]="blockAll" class="buscar" (click)="buscar()">
+                <label class="label-buscar">Buscar</label>
+            </button>
+        </div>
+
+        <div>
+            <button class="limpar" (click)="limpar()">
+                <label class="label-limpar">Limpar</label>
+            </button>
+        </div>
+
+        <div>
+            <button [disabled]="!vis" class="limpar" style="width: 140px;" (click)="visualizar()">
+                <label class="label-limpar">Visualizar os 30</label>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="dadosBusca" style="font: 1em sans-serif;">
+        <p>Nome: {{nom}} , Bloco: {{blo}}</p>
+    </div>
+    <div class="areaResultado">
+        <div *ngFor="let info of resultadoPesquisa">
+            <div class="dados" (click)="booster(info.id)">
+                <div>
+                    <label>{{info.nome}}</label>
+                </div>
+                <div>
+                    <small>{{info.bloco}}</small>
+                </div>
+                <div>
+                    <label class="dado3">{{info.releaseDate | date : 'dd/MM/yyyy'}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="fundoEscuro && !vis" class="fundo-cardsBooster" (click)="sair()">
+        <div class="cards">
+            <div *ngFor="let info of creatureCards">
+                <div class="card">
+                    <div>
+                        <img style="border-radius: 10px;" [src]="info.imageUrl ? info.imageUrl : false" alt="imagem do card">
+                    </div>
+                    <div class="info-card">
+                        <label class="info-label1">{{info.name}}</label>
+                        <label class="info-label2">Custo de Mana: {{info.manaCost}}</label>
+                        <div *ngIf="info.colorIdentity">
+                            <label *ngIf="info.colorIdentity[0] === 'U'" class="info-label3">Terreno: <img src="assets\U.webp" alt="Imagem do terreno"></label>
+                            <label *ngIf="info.colorIdentity[0] === 'B'" class="info-label3">Terreno: <img src="assets\B.webp" alt="Imagem do terreno"></label>
+                            <label *ngIf="info.colorIdentity[0] === 'R'" class="info-label3">Terreno: <img src="assets\R.webp" alt="Imagem do terreno"></label>
+                            <label *ngIf="info.colorIdentity[0] === 'G'" class="info-label3">Terreno: <img src="assets\G.png" alt="Imagem do terreno"></label>
+                        <label class="info-label3">Terreno: {{info.colorIdentity}}</label>
+                        </div>
+                        <label class="info-label4">{{info.text ? info.text : 'desconhecido'}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="fundoEscuro && vis" class="fundo-cardsBooster" (click)="sair()">
+        <div class="cards">
+            <div *ngFor="let info of cardsAcumulados">
+                <div class="card">
+                    <div>
+                        <img style="border-radius: 10px;" [src]="info.imageUrl ? info.imageUrl : false" alt="imagem do card">
+                    </div>
+                    <div class="info-card">
+                        <label class="info-label1">{{info.name}}</label>
+                        <label class="info-label2">Custo de Mana: {{info.manaCost}}</label>
+                        <div *ngIf="info.colorIdentity">
+                            <label *ngIf="info.colorIdentity[0] === 'U'" class="info-label3">Terreno: <img src="assets\U.webp" alt="Imagem do terreno"></label>
+                            <label *ngIf="info.colorIdentity[0] === 'B'" class="info-label3">Terreno: <img src="assets\B.webp" alt="Imagem do terreno"></label>
+                            <label *ngIf="info.colorIdentity[0] === 'R'" class="info-label3">Terreno: <img src="assets\R.webp" alt="Imagem do terreno"></label>
+                            <label *ngIf="info.colorIdentity[0] === 'G'" class="info-label3">Terreno: <img src="assets\G.png" alt="Imagem do terreno"></label>
+                            <label class="info-label3">Terreno: {{info.colorIdentity}}</label>
+                        </div>
+                        <label class="info-label4">{{info.text ? info.text : 'desconhecido'}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
